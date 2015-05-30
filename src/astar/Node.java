@@ -7,8 +7,8 @@ public class Node implements Comparable<Node> {
 	private int importance;
 	protected boolean visited;
 	protected Node parent;
-	protected double x;
-	protected double y;
+	protected float x;
+	protected float y;
 	private float fCost;//H
 	private float gCost;//G
 	private float timeSpent;
@@ -19,4 +19,21 @@ public class Node implements Comparable<Node> {
 		return 0;
 	}
 
+	public float getX() {
+		return x;
+	}
+
+	public void setX(float x) {
+		this.x = x;
+	}
+
+	public float getY() {
+		return y;
+	}
+
+	public void setY(float y) {
+		this.y = y;
+	}
+
+	
 }
