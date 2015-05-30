@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
+
 public class AStar {
 	
 	private Graph graph;
@@ -127,8 +129,17 @@ public class AStar {
 	}
 	
 	private ArrayList<Node> getNeighbours(Node currentNode, Node targetNode) {
-		
-		
+		ArrayList<Node> toReturn = new ArrayList<Node>();
+		for(Node n : graph.getNodes()){
+			if(!closed.contains(n) && !n.isVisited()){
+				float pathCost = currentNode.getTotalTime() + n.getVisitDuration() +
+						distanceBetweenNodes(n, targetNode) + distanceBetweenNodes(currentNode, n);
+				if(pathCost < timeLeft){ //Adiciona nó à lista se ainda tem tempo para regressar ao hotel
+					toReturn.add(n);
+				} 
+			}
+		}
+		return toReturn;
 	}
 	
 	
