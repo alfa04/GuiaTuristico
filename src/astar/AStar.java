@@ -20,12 +20,14 @@ public class AStar {
 		
 	}
 	
-	public void runAStar(Node targetNode){
-		graph.clearNodes(); //implement clearNodes
+	public Path runAStar(Node targetNode){
+		graph.eraseNodes(); //implement eraseNodes
 		visited.clear();
 		toVisit.clear();
 		toVisit.add(startNode);
 		Node currentNode;
+		//parent currentNode is null
+		
 		
 		//implementar custo g e f no Node
 		
@@ -34,7 +36,7 @@ public class AStar {
 			
 			if(currentNode == targetNode){
 				
-				reconstruct_path(visited, targetNode); //implementar --> nao tenho a certeza se os atributos estao bem
+				return reconstruct_path(currentNode.getParent(), targetNode); //implementar --> nao tenho a certeza se os atributos estao bem
 				
 			}
 			
@@ -49,24 +51,55 @@ public class AStar {
 					continue;
 				}
 				
-				float neighbourCost = neighbourCost(neighbour, currentNode); // implementar
+				float tentativeNeighbourCost = neighbourCost(neighbour, currentNode); // implementar
 				
-				if(!toVisit.contains(neighbour) || neighbourCost < neighbour.getGCost() /* implementar em Node*/){
-					//continuar aqui
+				if(!toVisit.contains(neighbour) || tentativeNeighbourCost < neighbour.getGCost() /* implementar em Node*/){
+					
+					neighbour.setParent(currentNode);
+					neighbour.setGCost(tentativeNeighbourCost);
+					float fCost = fCost(neighbour, targetNode);
+					if(!toVisit.contains(neighbour)){
+						toVisit.add(neighbour);
+					}
+					
 				}
 				
 				
-				
+				//faltam coisas
 			}
 			
 			
 		}
+			
+	}
+
+	private float neighbourCost(Node neighbour, Node currentNode) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	private Path reconstruct_path(Node node, Node currentNode) {
 		
+		Path totalPath = new Path();
 		
+		while(){
+			
+			currentNode = currentNode.getParent();
+			totalPath.append(currentNode);
+		}
 		
+		return totalPath;
 		
-		
-		
+	}
+
+	private ArrayList<Node> getNeighbours(Node currentNode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private float fCost(Node neighbour, Node currentNode) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	
