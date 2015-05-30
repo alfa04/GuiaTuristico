@@ -33,7 +33,7 @@ public class Graph {
 	
 	public Node getNode(String local){
 		for(Node node : this.nodes){
-			if(node.getLocalName().equals(local)){
+			if(node.getName().equals(local)){
 				return node;
 			}
 		}
@@ -50,7 +50,15 @@ public class Graph {
 	}
 
 	public void clearAll() {
-		// TODO Auto-generated method stub
+		for(Node node : nodes){
+			
+			if(!node.isVisited()){
+				node.setHCost(0);
+				node.setGCost(0);
+				node.setTotalTime(0);
+			}
+			
+		}
 		
 	}
 	

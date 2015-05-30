@@ -26,10 +26,6 @@ public class Path {
 		
 		return false;
 	}
-	
-	public int getX(int i) {
-        return getPathNode(i).getX();
-	}
 
 
 	 

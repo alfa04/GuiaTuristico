@@ -11,7 +11,7 @@ public class AStar {
 	private ArrayList<Node> closed = new ArrayList<Node>();
 	private ArrayList<Node> open = new ArrayList<Node>();
 	private int timeLeft;
-	//private Path path;
+	private Path path;
 	
 	
 
@@ -27,7 +27,7 @@ public class AStar {
 		closed.clear();
 		open.clear();
 		open.add(startNode);
-		Node currentNode;
+		Node currentNode = null;
 		//parent currentNode is null
 		
 		
@@ -38,74 +38,85 @@ public class AStar {
 			
 			if(currentNode == targetNode){
 				
-				return reconstruct_path(currentNode); //implementar --> nao tenho a certeza se os atributos estao bem
+				return reconstructPath(currentNode); //nao tenho a certeza se e preciso --> nao tenho a certeza se os atributos estao bem
 				
 			}
 			
 			open.remove(currentNode);
 			closed.add(currentNode);
 			
-			ArrayList<Node> neighbours = getNeighbours(currentNode); //talvez tambem target como atributo
+			ArrayList<Node> neighbours = getNeighbours(currentNode, targetNode); //talvez tambem target como atributo
 			
-			for(Node neighbour : neighbours){
-				boolean neighbourIsBetter;
-				
-				if(closed.contains(neighbour)){
-					continue;
-				}
-				
-				float neighbourCostSinceStart = neighbourCostSinceStart(currentNode, targetNode); // implementar
-				
-				if(!open.contains(neighbour)){
-					open.add(neighbour);
-					neighbourIsBetter = true;
+			
+			if(neighbours.size() > 0){
+				for(Node neighbour : neighbours){
+					boolean neighbourIsBetter;
+					
+					if(closed.contains(neighbour)){
+						continue;
+					}
+					
+					float neighbourCostSinceStart = neighbourCostSinceStart(currentNode, targetNode); // implementar
+					
+					if(!open.contains(neighbour)){
+						open.add(neighbour);
+						neighbourIsBetter = true;
+						
+					}
+					
+					else if(neighbourCostSinceStart < currentNode.getGCost()){					
+						neighbourIsBetter = true;
+					}
+					
+					else neighbourIsBetter = false;
+					
+					if (neighbourIsBetter) {
+	                    neighbour.setParent(currentNode);
+	                    neighbour.setGCost(neighbourCostSinceStart);
+	                    float heuristicCost = heuristicCost(currentNode, neighbour);
+	                    neighbour.setHCost(heuristicCost);
+	                }
+	
 					
 				}
-				
-				else if(neighbourCostSinceStart < currentNode.getG()){					
-					neighbourIsBetter = true;
-				}
-				
-				else neighbourIsBetter = false;
-				
-				if (neighbourIsBetter) {
-                    neighbour.setParent(currentNode);
-                    neighbour.setG(neighbourCostSinceStart);
-                    float heuristicCost = heuristicCost(neighbour, neighbor);
-                    neighbour.setH(heuristicCost);
-                }
-
-				
+			}
+			
+			else if(neighbours.size() == 0){
+				targetNode.setParent(currentNode);
+				return reconstructPath(targetNode);
 			}
 			
 			Collections.sort(open);
 			
 		}
+		targetNode.setParent(currentNode);
+		return reconstructPath(targetNode);
 			
 	}
 
-	private float heuristicCost(Node neighbour, Node targetNode) {
-		float heuristicCost=(float) (-(neighbour.getImportance()*neighbour.getImportance())/Distance.distanceToTarget(current, neighbor));
-		return 0;
+	private float heuristicCost(Node currentNode, Node neighbour) {
+		float heuristicCost=(float) (-(neighbour.getImportance()*neighbour.getImportance())/distanceBetweenNodes(currentNode, neighbour));
+		return heuristicCost;
 	}
 
 	private float neighbourCostSinceStart(Node currentNode, Node targetNode) {
-		float neighbourCost=(float) (-distanceBetweenNodes(currentNode, targetNode)) + current.getG();
+		float neighbourCost=(float) (-distanceBetweenNodes(currentNode, targetNode)) + currentNode.getGCost();
 
 		return neighbourCost;
 	}
 
-	private Path reconstruct_path(Node node) {
+	private Path reconstructPath(Node node) {
 		
 		Path totalPath = new Path();
 		
-		while(){
-			
-			currentNode = currentNode.getParent();
-			totalPath.append(currentNode);
+		while(!(node.getParent() == null)){
+			totalPath.addNodeToFirstIndexPath(node);
+			node.setVisited(true);
+			node = node.getParent();
 		}
 		
-		return totalPath;
+		this.path = totalPath;
+		return totalPath; //nao tenho a certeza se esta tudo bem
 		
 	}
 
@@ -115,19 +126,9 @@ public class AStar {
 		return toReturn;
 	}
 	
-	private ArrayList<Node> getNeighbours(Node currentNode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private float fCost(Node neighbour, Node currentNode) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	private float gCost(Node neighbour, Node currentNode) {
-		// TODO Auto-generated method stub
-		return 0;
+	private ArrayList<Node> getNeighbours(Node currentNode, Node targetNode) {
+		
+		
 	}
 	
 	
