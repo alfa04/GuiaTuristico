@@ -1,13 +1,15 @@
 package astar;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class AStar {
 	
 	private Graph graph;
 	private Node startNode;
-	private ArrayList<Node> visited = new ArrayList<Node>();
-	private ArrayList<Node> toVisit = new ArrayList<Node>();
+	private ArrayList<Node> closed = new ArrayList<Node>();
+	private ArrayList<Node> open = new ArrayList<Node>();
 	private int timeLeft;
 	//private Path path;
 	
@@ -21,64 +23,79 @@ public class AStar {
 	}
 	
 	public Path runAStar(Node targetNode){
-		graph.eraseNodes(); //implement eraseNodes
-		visited.clear();
-		toVisit.clear();
-		toVisit.add(startNode);
+		graph.clearAll(); //implement clearAll
+		closed.clear();
+		open.clear();
+		open.add(startNode);
 		Node currentNode;
 		//parent currentNode is null
 		
 		
 		//implementar custo g e f no Node
 		
-		while(toVisit.size() != 0){
-			currentNode = toVisit.get(0); //having the lowest f cost
+		while(open.size() != 0){
+			currentNode = open.get(0); //having the lowest f cost
 			
 			if(currentNode == targetNode){
 				
-				return reconstruct_path(currentNode.getParent(), targetNode); //implementar --> nao tenho a certeza se os atributos estao bem
+				return reconstruct_path(currentNode); //implementar --> nao tenho a certeza se os atributos estao bem
 				
 			}
 			
-			toVisit.remove(currentNode);
-			visited.add(currentNode);
+			open.remove(currentNode);
+			closed.add(currentNode);
 			
 			ArrayList<Node> neighbours = getNeighbours(currentNode); //talvez tambem target como atributo
 			
 			for(Node neighbour : neighbours){
+				boolean neighbourIsBetter;
 				
-				if(visited.contains(neighbour)){
+				if(closed.contains(neighbour)){
 					continue;
 				}
 				
-				float tentativeNeighbourCost = neighbourCost(neighbour, currentNode); // implementar
+				float NeighbourCostSinceStart = neighbourCost(neighbour, currentNode); // implementar
 				
-				if(!toVisit.contains(neighbour) || tentativeNeighbourCost < neighbour.getGCost() /* implementar em Node*/){
-					
-					neighbour.setParent(currentNode);
-					neighbour.setGCost(tentativeNeighbourCost);
-					float fCost = fCost(neighbour, targetNode);
-					if(!toVisit.contains(neighbour)){
-						toVisit.add(neighbour);
-					}
+				if(!open.contains(neighbour)){
+					open.add(neighbour);
+					neighbourIsBetter = true;
 					
 				}
 				
+				else if(NeighbourCostSinceStart < currentNode.getG()){					
+					neighbourIsBetter = true;
+				}
 				
-				//faltam coisas
+				else neighbourIsBetter = false;
+				
+				if (neighbourIsBetter) {
+                    neighbour.setParent(currentNode);
+                    neighbour.setG(NeighbourCostSinceStart);
+                    float heuristicCost = heuristicCost(neighbour, targetNode);
+                    neighbour.setH(heuristicCost);
+                }
+
+				
 			}
 			
+			Collections.sort(open);
 			
 		}
 			
 	}
 
-	private float neighbourCost(Node neighbour, Node currentNode) {
-		// TODO Auto-generated method stub
+	private float heuristicCost(Node neighbour, Node targetNode) {
+		
 		return 0;
 	}
 
-	private Path reconstruct_path(Node node, Node currentNode) {
+	private float neighbourCost(Node neighbour, Node currentNode) {
+		float neighbourCost = currentNode.getG() + distance(current, neighbour);
+
+		return neighbourCost;
+	}
+
+	private Path reconstruct_path(Node node) {
 		
 		Path totalPath = new Path();
 		
@@ -101,6 +118,13 @@ public class AStar {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	private float gCost(Node neighbour, Node currentNode) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
 	
 	
 	
