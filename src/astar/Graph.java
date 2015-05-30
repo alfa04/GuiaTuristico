@@ -30,4 +30,24 @@ public class Graph {
 			System.out.println("Node Size : " + this.nodes.size());
 		}
 	}
+	
+	public Node getNode(String local){
+		for(Node node : this.nodes){
+			if(node.getLocalName().equals(local)){
+				return node;
+			}
+		}
+		System.err.println("Local " + local + " not found.");
+		return null;
+	}
+
+	public ArrayList<Node> getNodes() {
+		return nodes;
+	}
+
+	public void setNodes(ArrayList<Node> nodes) {
+		this.nodes = nodes;
+	}
+	
+	
 }
