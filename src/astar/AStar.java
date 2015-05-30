@@ -54,7 +54,7 @@ public class AStar {
 					continue;
 				}
 				
-				float NeighbourCostSinceStart = neighbourCost(neighbour, currentNode); // implementar
+				float neighbourCostSinceStart = neighbourCostSinceStart(currentNode, targetNode); // implementar
 				
 				if(!open.contains(neighbour)){
 					open.add(neighbour);
@@ -62,7 +62,7 @@ public class AStar {
 					
 				}
 				
-				else if(NeighbourCostSinceStart < currentNode.getG()){					
+				else if(neighbourCostSinceStart < currentNode.getG()){					
 					neighbourIsBetter = true;
 				}
 				
@@ -70,8 +70,8 @@ public class AStar {
 				
 				if (neighbourIsBetter) {
                     neighbour.setParent(currentNode);
-                    neighbour.setG(NeighbourCostSinceStart);
-                    float heuristicCost = heuristicCost(neighbour, targetNode);
+                    neighbour.setG(neighbourCostSinceStart);
+                    float heuristicCost = heuristicCost(neighbour, neighbor);
                     neighbour.setH(heuristicCost);
                 }
 
@@ -85,12 +85,12 @@ public class AStar {
 	}
 
 	private float heuristicCost(Node neighbour, Node targetNode) {
-		
+		float heuristicCost=(float) (-(neighbour.getImportance()*neighbour.getImportance())/Distance.distanceToTarget(current, neighbor));
 		return 0;
 	}
 
-	private float neighbourCost(Node neighbour, Node currentNode) {
-		float neighbourCost = currentNode.getG() + distance(current, neighbour);
+	private float neighbourCostSinceStart(Node currentNode, Node targetNode) {
+		float neighbourCost=(float) (-distanceBetweenNodes(currentNode, targetNode)) + current.getG();
 
 		return neighbourCost;
 	}
@@ -109,6 +109,12 @@ public class AStar {
 		
 	}
 
+	public float distanceBetweenNodes(Node currentNode, Node targetNode){
+		float toReturn = (float) Math.sqrt((targetNode.getX()-currentNode.getX())*(targetNode.getX()-currentNode.getX())-
+				(targetNode.getX()-currentNode.getX())*(targetNode.getX()-currentNode.getX()));
+		return toReturn;
+	}
+	
 	private ArrayList<Node> getNeighbours(Node currentNode) {
 		// TODO Auto-generated method stub
 		return null;
