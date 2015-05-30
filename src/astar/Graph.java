@@ -48,6 +48,11 @@ public class Graph {
 	public void setNodes(ArrayList<Node> nodes) {
 		this.nodes = nodes;
 	}
+
+	public void clearAll() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }
