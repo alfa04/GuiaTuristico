@@ -66,12 +66,33 @@ public class Star {
 	}
 
 	public static void increaseDay() {
-		nDays++;
+		boolean notAllVisited = false;
+		for(Node node: graph.getNodes()){
+			if(!node.isVisited()){
+				notAllVisited = true;
+			}
+		}
+		
+		if(notAllVisited){	
+			nDays++;
+		}
 	}
 	public static void decreaseDay() {
 		if(nDays>1)
 		nDays--;
 		else nDays=1;
+	}
+
+
+
+	public static int getnDays() {
+		return nDays;
+	}
+
+
+
+	public static void setnDays(int nDays) {
+		Star.nDays = nDays;
 	}
 
 

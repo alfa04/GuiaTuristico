@@ -3,36 +3,17 @@ buttons.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-play
+next
   rotate: false
-  xy: 1, 607
-  size: 873, 301
-  orig: 873, 301
+  xy: 1, 127
+  size: 305, 128
+  orig: 305, 128
   offset: 0, 0
   index: -1
-play2
-  rotate: false
-  xy: 1, 304
-  size: 873, 301
-  orig: 873, 301
-  offset: 0, 0
-  index: -1
-exit
+back
   rotate: false
   xy: 1, 1
-  size: 786, 301
-  orig: 786, 301
-  offset: 0, 0
-  index: -1
-
-buttons2.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-exit2
-  rotate: false
-  xy: 1, 1
-  size: 786, 301
-  orig: 786, 301
+  size: 303, 124
+  orig: 303, 124
   offset: 0, 0
   index: -1

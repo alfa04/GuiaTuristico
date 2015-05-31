@@ -55,17 +55,17 @@ public class MenuScreen implements Screen{
 		skins.addRegions(buttonAtlas);
 		textButtonStylePlay = new TextButtonStyle();
 		textButtonStylePlay.font = font;
-		textButtonStylePlay.up = skins.getDrawable("play");
-		textButtonStylePlay.down = skins.getDrawable("play");
-		textButtonStylePlay.checked = skins.getDrawable("play");
-		textButtonStylePlay.over = skins.getDrawable("play2");
+		textButtonStylePlay.up = skins.getDrawable("back");
+		textButtonStylePlay.down = skins.getDrawable("back");
+		textButtonStylePlay.checked = skins.getDrawable("back");
+		textButtonStylePlay.over = skins.getDrawable("back");
 
 		textButtonStyleExit = new TextButtonStyle();
 		textButtonStyleExit.font = font;
-		textButtonStyleExit.up = skins.getDrawable("exit");
-		textButtonStyleExit.down = skins.getDrawable("exit");
-		textButtonStyleExit.checked = skins.getDrawable("exit");
-		textButtonStyleExit.over = skins.getDrawable("exit2");
+		textButtonStyleExit.up = skins.getDrawable("next");
+		textButtonStyleExit.down = skins.getDrawable("next");
+		textButtonStyleExit.checked = skins.getDrawable("next");
+		textButtonStyleExit.over = skins.getDrawable("next");
 
 		skin = new Skin();
 		stage = new Stage();
@@ -151,6 +151,7 @@ public class MenuScreen implements Screen{
 	   
 		batch.begin();
 		batch.draw(fundo,0 , 0,Gdx.app.getGraphics().getWidth(),Gdx.app.getGraphics().getHeight());
+		font.draw(batch, "Dia "+ Star.getnDays(),  20, 480);
 		ArrayList<Node> pathNodes = new ArrayList<Node>();
 		pathNodes = Star.getAstar().getPath().getPathNodes();
 		
@@ -173,14 +174,14 @@ public class MenuScreen implements Screen{
 			//System.out.print(pathNodes.get(i).getName());
 			batch.draw(Pi,(allNodes.get(i).getX()*800)/Star.graph.getBiggerX() , (allNodes.get(i).getY()*450)/Star.graph.getBiggerY(),30,30);
 			font.draw(batch, allNodes.get(i).getName(), (allNodes.get(i).getX()*800)/Star.graph.getBiggerX(),  (allNodes.get(i).getY()*450)/Star.graph.getBiggerY());
-			if(i != Star.getAstar().getPath().getPathNodes().size()-1)
-			System.out.print(" --> ");
+			//if(i != Star.getAstar().getPath().getPathNodes().size()-1)
+			//System.out.print(" --> ");
 			
 			
 			
 		}
 		
-		 
+		
 		// Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight()
 		batch.end();
 		sr.end();
