@@ -29,12 +29,12 @@ public class Node implements Comparable<Node> {
 	}
 
 	public int compareTo(Node node2) {
-		if(this.name.equals(node2.getName())){
+		/*if(this.name.equals(node2.getName())){
 			return 1;
 		}
 		
 		else{
-		
+		*/
 		if(this.getFCost() < node2.getFCost()){
 			return -1;
 		}
@@ -44,7 +44,7 @@ public class Node implements Comparable<Node> {
 		}
 		
 		else{
-			
+			/*
 			if(this.getImportance() < node2.getImportance()){
 				return -1;
 			}
@@ -59,7 +59,8 @@ public class Node implements Comparable<Node> {
 				
 			}
 			
-		}
+		}*/
+			return 0;
 
 		}
 		

@@ -91,9 +91,21 @@ public class AStar {
 				return reconstructPath(targetNode, graph, targetNode);
 			}
 			
+			//for(Node n: open)
+			//	System.out.println(n.getName());
 			Collections.sort(open);
 			
+			/*System.out.print("aaa");
+			for(Node n: open)
+				System.out.println(n.getName());
+			System.out.println('\n');
+			for(Node no: closed)
+				System.out.println(no.getName());
+			System.out.println("\n\n");*/
+			
+			
 		}
+		
 		targetNode.setParent(currentNode);
 		return reconstructPath(targetNode, graph, targetNode);
 			
@@ -114,7 +126,7 @@ public class AStar {
 		Path path = new Path();
 		boolean var = true;
 		while(var){
-			System.out.println(node.getName());
+			
 			path.addNodeToFirstIndexPath(node);
 			node.setVisited(true);
 			node = node.getParent();
@@ -122,6 +134,8 @@ public class AStar {
 				path.addNodeToFirstIndexPath(target);
 				var = false;
 			}
+			
+			System.out.println(node.getName());
 
 		}
 		this.path = path;
@@ -172,7 +186,18 @@ public class AStar {
 	}
 	
 	public void printPath() {
-        Node node;
+		
+		ArrayList<Node> pathNodes = new ArrayList<Node>();
+		pathNodes = path.getPathNodes();
+		
+		for(int i = 0; i < pathNodes.size(); i++){
+			
+			System.out.print(pathNodes.get(i).getName());
+			if(i != path.getPathNodes().size()-1)
+			System.out.print(" --> ");
+		}
+		
+       /* Node node;
         for(int x=0; x<20; x++) {
 
                 if (x==0) {
@@ -180,6 +205,7 @@ public class AStar {
                                 System.out.print("-");
                         System.out.println();   
                 }
+                
                 System.out.print("|");
 
                 for(int y=0; y<20; y++) {
@@ -203,6 +229,11 @@ public class AStar {
         }
         for (int i=0; i<=20; i++)
                 System.out.print("-");
+                */
+                
+                
+                
+                
         }
 
 	
