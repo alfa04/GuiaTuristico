@@ -12,6 +12,7 @@ public class Node implements Comparable<Node> {
 	private float gCost;
 	private float hCost;
 	private float totalTime;
+	Node tmp;
 	
 	public Node(String name, int visitDuration, int importance) {
 		
@@ -23,11 +24,46 @@ public class Node implements Comparable<Node> {
 		this.hCost = 0;
 		this.totalTime = 0;
 		this.visited = false;
+		this.x = 0;
+		this.y = 0;
 	}
 
-	public int compareTo(Node arg0) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Node node2) {
+		if(this.name.equals(node2.getName())){
+			return 1;
+		}
+		
+		else{
+		
+		if(this.getFCost() < node2.getFCost()){
+			return -1;
+		}
+		
+		else if(this.getFCost() > node2.getFCost()){
+			return 1;
+		}
+		
+		else{
+			
+			if(this.getImportance() < node2.getImportance()){
+				return -1;
+			}
+			
+			else if(this.getImportance() > node2.getImportance()){
+				return 1;
+			}
+			
+			else{
+				
+				return 0;
+				
+			}
+			
+		}
+
+		}
+		
+		
 	}
 
 	public float getX() {
@@ -73,6 +109,10 @@ public class Node implements Comparable<Node> {
 	public float getHCost() {
 		return hCost;
 	}
+	
+	public float getFCost() {
+		return hCost + gCost;
+	}
 
 	public void setHCost(float hCost) {
 		this.hCost = hCost;
@@ -108,6 +148,18 @@ public class Node implements Comparable<Node> {
 
 	public void setVisitDuration(int visitDuration) {
 		this.visitDuration = visitDuration;
+	}
+	
+	public float distanceBetweenNodes(Node currentNode, Node targetNode){
+		float toReturn = (float) Math.sqrt((targetNode.getX()-currentNode.getX())*(targetNode.getY()-currentNode.getY())+
+				(targetNode.getX()-currentNode.getX())*(targetNode.getY()-currentNode.getY()));
+		return toReturn;
+	}
+	
+	public float timeBetweenNodes(Node currentNode, Node targetNode){
+		float toReturn = (float) Math.sqrt((targetNode.getX()-currentNode.getX())*(targetNode.getY()-currentNode.getY())+
+				(targetNode.getX()-currentNode.getX())*(targetNode.getY()-currentNode.getY()));
+		return (float) ((toReturn/1.4)/60.0);
 	}
 
 	

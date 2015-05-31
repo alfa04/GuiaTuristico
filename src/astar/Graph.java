@@ -65,5 +65,14 @@ public class Graph {
 		
 	}
 	
+	public Node getNodeXY(float x, float y){
+		for(Node node: nodes){
+			if(node.getX() == x && node.getY() == y)
+				return node;
+		}
+		
+		return null;
+	}
+	
 	
 }

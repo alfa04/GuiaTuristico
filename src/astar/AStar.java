@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AStar {
 	
-	private Graph graph;
+	private static Graph graph;
 	private Node startNode;
 	private ArrayList<Node> closed = new ArrayList<Node>();
 	private ArrayList<Node> open = new ArrayList<Node>();
@@ -17,8 +17,8 @@ public class AStar {
 	
 	
 
-	public AStar(Graph graph, Node startNode, int timeLeft){
-		this.graph = graph;
+	public AStar(Graph g, Node startNode, int timeLeft){
+		graph = g;
 		this.startNode = startNode;
 		this.timeLeft = timeLeft;
 		
@@ -38,11 +38,11 @@ public class AStar {
 		while(open.size() != 0){
 			currentNode = open.get(0); //having the lowest f cost
 			
-			if(currentNode == targetNode){
+			/*if(currentNode == targetNode){
 				
 				return reconstructPath(currentNode); //nao tenho a certeza se e preciso --> nao tenho a certeza se os atributos estao bem
 				
-			}
+			}*/
 			
 			open.remove(currentNode);
 			closed.add(currentNode);
@@ -52,13 +52,13 @@ public class AStar {
 			
 			if(neighbours.size() > 0){
 				for(Node neighbour : neighbours){
-					boolean neighbourIsBetter;
+					boolean neighbourIsBetter = false;
 					
 					if(closed.contains(neighbour)){
 						continue;
 					}
 					
-					float neighbourCostSinceStart = neighbourCostSinceStart(currentNode, targetNode); // implementar
+					float neighbourCostSinceStart = neighbourCostSinceStart(currentNode, targetNode); // mudei de current e target para neighbour e current
 					
 					if(!open.contains(neighbour)){
 						open.add(neighbour);
@@ -66,7 +66,7 @@ public class AStar {
 						
 					}
 					
-					else if(neighbourCostSinceStart < currentNode.getGCost()){					
+					else if(neighbourCostSinceStart < neighbour.getGCost()){		//mudei de current para neighbour			
 						neighbourIsBetter = true;
 					}
 					
@@ -75,8 +75,11 @@ public class AStar {
 					if (neighbourIsBetter) {
 	                    neighbour.setParent(currentNode);
 	                    neighbour.setGCost(neighbourCostSinceStart);
-	                    float heuristicCost = heuristicCost(currentNode, neighbour);
+	                    float heuristicCost = heuristicCost(currentNode, neighbour); //mudei de current e neighbour para neighbour e target
 	                    neighbour.setHCost(heuristicCost);
+	                    neighbour.setTotalTime(currentNode.getTotalTime() +
+	                    		neighbour.getVisitDuration() +
+                                timeBetweenNodes(currentNode, neighbour));
 	                }
 	
 					
@@ -85,14 +88,14 @@ public class AStar {
 			
 			else if(neighbours.size() == 0){
 				targetNode.setParent(currentNode);
-				return reconstructPath(targetNode);
+				return reconstructPath(targetNode, graph, targetNode);
 			}
 			
 			Collections.sort(open);
 			
 		}
 		targetNode.setParent(currentNode);
-		return reconstructPath(targetNode);
+		return reconstructPath(targetNode, graph, targetNode);
 			
 	}
 
@@ -106,34 +109,47 @@ public class AStar {
 
 		return neighbourCost;
 	}
+	
+	private Path reconstructPath(Node node, Graph graph, Node target){
+		Path path = new Path();
+		boolean var = true;
+		while(var){
+			System.out.println(node.getName());
+			path.addNodeToFirstIndexPath(node);
+			node.setVisited(true);
+			node = node.getParent();
+			if(node.equals(target)){
+				path.addNodeToFirstIndexPath(target);
+				var = false;
+			}
 
-	private Path reconstructPath(Node node) {
+		}
+		this.path = path;
+		return path;
+	}
+
+	/*private Path reconstructPath(Node node) {
 		
 		Path totalPath = new Path();
 		
 		while(!(node.getParent() == null)){
 			totalPath.addNodeToFirstIndexPath(node);
 			node.setVisited(true);
+			System.out.println(node.getName());
 			node = node.getParent();
 		}
 		
 		this.path = totalPath;
 		return totalPath; //nao tenho a certeza se esta tudo bem
 		
-	}
-
-	public float distanceBetweenNodes(Node currentNode, Node targetNode){
-		float toReturn = (float) Math.sqrt((targetNode.getX()-currentNode.getX())*(targetNode.getX()-currentNode.getX())-
-				(targetNode.getX()-currentNode.getX())*(targetNode.getX()-currentNode.getX()));
-		return toReturn;
-	}
+	}*/
 	
 	private ArrayList<Node> getNeighbours(Node currentNode, Node targetNode) {
 		ArrayList<Node> toReturn = new ArrayList<Node>();
 		for(Node n : graph.getNodes()){
-			if(!closed.contains(n) && !n.isVisited()){
+			if(!closed.contains(n) && !n.isVisited() /*n != currentNode*/){
 				float pathCost = currentNode.getTotalTime() + n.getVisitDuration() +
-						distanceBetweenNodes(n, targetNode) + distanceBetweenNodes(currentNode, n);
+						timeBetweenNodes(n, targetNode) + timeBetweenNodes(currentNode, n);
 				if(pathCost < timeLeft){ //Adiciona nó à lista se ainda tem tempo para regressar ao hotel
 					toReturn.add(n);
 				} 
@@ -143,6 +159,52 @@ public class AStar {
 	}
 	
 	
+	public float distanceBetweenNodes(Node currentNode, Node targetNode){
+		float toReturn = (float) Math.sqrt((targetNode.getX()-currentNode.getX())*(targetNode.getY()-currentNode.getY())+
+				(targetNode.getX()-currentNode.getX())*(targetNode.getY()-currentNode.getY()));
+		return toReturn;
+	}
+	
+	public float timeBetweenNodes(Node currentNode, Node targetNode){
+		float toReturn = (float) Math.sqrt((targetNode.getX()-currentNode.getX())*(targetNode.getY()-currentNode.getY())+
+				(targetNode.getX()-currentNode.getX())*(targetNode.getY()-currentNode.getY()));
+		return (float) ((toReturn/1.4)/60.0);
+	}
+	
+	public void printPath() {
+        Node node;
+        for(int x=0; x<20; x++) {
+
+                if (x==0) {
+                        for (int i=0; i<=20; i++)
+                                System.out.print("-");
+                        System.out.println();   
+                }
+                System.out.print("|");
+
+                for(int y=0; y<20; y++) {
+                        node = graph.getNodeXY(x, y);
+                    
+                        if(node != null){
+                        if (path.contains(node.getX(), node.getY())) {
+                                System.out.print("S");
+                        } 
+                        }
+                        
+                        else
+                                System.out.print(".");
+                     
+                        if (y==20)
+                                System.out.print("_");
+                }
+
+                System.out.print("|");
+                System.out.println();
+        }
+        for (int i=0; i<=20; i++)
+                System.out.print("-");
+        }
+
 	
 	
 	

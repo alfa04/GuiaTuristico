@@ -18,9 +18,9 @@ public class Path {
 		return pathNodes.get(i);
 	}
 	
-	public boolean contains(int x, int y){
+	public boolean contains(float f, float g){
 		for(Node node: pathNodes){
-			if(node.getX() == x && node.getY() ==y)
+			if(node.getX() == f && node.getY() ==g)
 				return true;
 		}
 		
