@@ -77,7 +77,7 @@ public class AStar {
 	                    neighbour.setGCost(neighbourCostSinceStart);
 	                    float heuristicCost = heuristicCost(currentNode, neighbour); //mudei de current e neighbour para neighbour e target
 	                    neighbour.setHCost(heuristicCost);
-	                    neighbour.setTotalTime(currentNode.getTotalTime() +
+	                    neighbour.setTotalTime(neighbour.getParent().getTotalTime() +
 	                    		neighbour.getVisitDuration() +
                                 timeBetweenNodes(currentNode, neighbour));
 	                }
@@ -160,14 +160,14 @@ public class AStar {
 	
 	
 	public float distanceBetweenNodes(Node currentNode, Node targetNode){
-		float toReturn = (float) Math.sqrt((targetNode.getX()-currentNode.getX())*(targetNode.getY()-currentNode.getY())+
-				(targetNode.getX()-currentNode.getX())*(targetNode.getY()-currentNode.getY()));
+		float toReturn = (float) Math.sqrt((targetNode.getX()-currentNode.getX())*(targetNode.getX()-currentNode.getX())+
+				(targetNode.getY()-currentNode.getY())*(targetNode.getY()-currentNode.getY()));
 		return toReturn;
 	}
 	
 	public float timeBetweenNodes(Node currentNode, Node targetNode){
-		float toReturn = (float) Math.sqrt((targetNode.getX()-currentNode.getX())*(targetNode.getY()-currentNode.getY())+
-				(targetNode.getX()-currentNode.getX())*(targetNode.getY()-currentNode.getY()));
+		float toReturn = (float) Math.sqrt((targetNode.getX()-currentNode.getX())*(targetNode.getX()-currentNode.getX())+
+				(targetNode.getY()-currentNode.getY())*(targetNode.getY()-currentNode.getY()));
 		return (float) ((toReturn/1.4)/60.0);
 	}
 	
