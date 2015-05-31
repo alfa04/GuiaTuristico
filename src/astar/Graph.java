@@ -23,14 +23,14 @@ public class Graph {
 				if(parameter.length == 3){
 					Node n = new Node(parameter[0].trim(),Integer.parseInt(parameter[1].trim()),Integer.parseInt(parameter[2].trim()));
 					this.nodes.add(n);
-					System.out.print(parameter[0].trim());
-					System.out.print(Integer.parseInt(parameter[1].trim()));
-					System.out.println(Integer.parseInt(parameter[2].trim()));
+				//	System.out.print(parameter[0].trim());
+				//	System.out.print(Integer.parseInt(parameter[1].trim()));
+				//	System.out.println(Integer.parseInt(parameter[2].trim()));
 				} else {
 					System.err.println("Error parsing line : " + line);
 				}
 			}
-			System.out.println("Node Size : " + this.nodes.size());
+			//System.out.println("Node Size : " + this.nodes.size());
 		}
 	}
 	

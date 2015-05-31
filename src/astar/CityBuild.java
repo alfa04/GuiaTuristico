@@ -24,9 +24,9 @@ public class CityBuild {
 					if((info[0].trim()).equals(node.getName())){
 						float x = Float.parseFloat(info[1].trim());
 						float y = Float.parseFloat(info[2].trim());
-						System.out.print(info[0].trim());
-						System.out.print(Integer.parseInt(info[1].trim()));
-						System.out.println(Integer.parseInt(info[2].trim()));
+						//System.out.print(info[0].trim());
+						//System.out.print(Integer.parseInt(info[1].trim()));
+						//System.out.println(Integer.parseInt(info[2].trim()));
 						node.setX(x);
 						node.setY(y);
 						break;
