@@ -27,6 +27,15 @@ public class Path {
 		return false;
 	}
 
+	public ArrayList<Node> getPathNodes() {
+		return pathNodes;
+	}
+
+	public void setPathNodes(ArrayList<Node> pathNodes) {
+		this.pathNodes = pathNodes;
+	}
+
+	
 
 	 
 }
