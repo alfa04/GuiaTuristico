@@ -174,13 +174,20 @@ public class AStar {
 	public float distanceBetweenNodes(Node currentNode, Node targetNode){
 		float toReturn = (float) Math.sqrt((targetNode.getX()-currentNode.getX())*(targetNode.getX()-currentNode.getX())+
 				(targetNode.getY()-currentNode.getY())*(targetNode.getY()-currentNode.getY()));
+		System.out.print("dist" + currentNode.getName());
+		System.out.print("-" + targetNode.getName());
+		System.out.println(toReturn);
 		return toReturn;
+		
 	}
 	
 	public float timeBetweenNodes(Node currentNode, Node targetNode){
 		float toReturn = (float) Math.sqrt((targetNode.getX()-currentNode.getX())*(targetNode.getX()-currentNode.getX())+
 				(targetNode.getY()-currentNode.getY())*(targetNode.getY()-currentNode.getY()));
-		return (float) ((toReturn/2)/60.0);
+		System.out.print("time" + currentNode.getName());
+		System.out.print("-" + targetNode.getName());
+		System.out.println((toReturn/2)/*/60.0*/);
+		return (float) ((toReturn/2)/*/60.0*/);
 	}
 	
 }
