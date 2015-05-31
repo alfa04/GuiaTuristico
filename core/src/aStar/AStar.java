@@ -32,24 +32,14 @@ public class AStar {
 	}
 	
 	public Path runAStar(Node targetNode){
-		graph.clearAll(); //implement clearAll
+		graph.clearAll();
 		closed.clear();
 		open.clear();
 		open.add(startNode);
 		Node currentNode = null;
-		//parent currentNode is null
-		
-		
-		//implementar custo g e f no Node
 		
 		while(open.size() != 0){
-			currentNode = open.get(0); //having the lowest f cost
-			
-			/*if(currentNode == targetNode){
-				
-				return reconstructPath(currentNode); //nao tenho a certeza se e preciso --> nao tenho a certeza se os atributos estao bem
-				
-			}*/
+			currentNode = open.get(0);
 			
 			open.remove(currentNode);
 			closed.add(currentNode);
@@ -65,15 +55,15 @@ public class AStar {
 						continue;
 					}
 					
-					float neighbourCostSinceStart = neighbourCostSinceStart(currentNode, targetNode); // mudei de current e target para neighbour e current
-					
+					float neighbourCostSinceStart = neighbourCostSinceStart(currentNode, targetNode); 
+
 					if(!open.contains(neighbour)){
 						open.add(neighbour);
 						neighbourIsBetter = true;
 						
 					}
 					
-					else if(neighbourCostSinceStart < neighbour.getGCost()){		//mudei de current para neighbour			
+					else if(neighbourCostSinceStart < neighbour.getGCost()){		
 						neighbourIsBetter = true;
 					}
 					
@@ -82,7 +72,7 @@ public class AStar {
 					if (neighbourIsBetter) {
 	                    neighbour.setParent(currentNode);
 	                    neighbour.setGCost(neighbourCostSinceStart);
-	                    float heuristicCost = heuristicCost(currentNode, neighbour); //mudei de current e neighbour para neighbour e target
+	                    float heuristicCost = heuristicCost(currentNode, neighbour);
 	                    neighbour.setHCost(heuristicCost);
 	                    neighbour.setTotalTime(neighbour.getParent().getTotalTime() +
 	                    		neighbour.getVisitDuration() +
@@ -98,17 +88,7 @@ public class AStar {
 				return reconstructPath(targetNode, graph, targetNode);
 			}
 			
-			//for(Node n: open)
-			//	System.out.println(n.getName());
 			Collections.sort(open);
-			
-			/*System.out.print("aaa");
-			for(Node n: open)
-				System.out.println(n.getName());
-			System.out.println('\n');
-			for(Node no: closed)
-				System.out.println(no.getName());
-			System.out.println("\n\n");*/
 			
 			
 		}
@@ -140,37 +120,20 @@ public class AStar {
 				path.addNodeToFirstIndexPath(target);
 				var = false;
 			}
-			
-		//	System.out.println(node.getName());
 
 		}
 		this.path = path;
 		return path;
 	}
 
-	/*private Path reconstructPath(Node node) {
-		
-		Path totalPath = new Path();
-		
-		while(!(node.getParent() == null)){
-			totalPath.addNodeToFirstIndexPath(node);
-			node.setVisited(true);
-			System.out.println(node.getName());
-			node = node.getParent();
-		}
-		
-		this.path = totalPath;
-		return totalPath; //nao tenho a certeza se esta tudo bem
-		
-	}*/
 	
 	private ArrayList<Node> getNeighbours(Node currentNode, Node targetNode) {
 		ArrayList<Node> toReturn = new ArrayList<Node>();
 		for(Node n : graph.getNodes()){
-			if(!closed.contains(n) && !n.isVisited() /*n != currentNode*/){
+			if(!closed.contains(n) && !n.isVisited()){
 				float pathCost = currentNode.getTotalTime() + n.getVisitDuration() +
 						timeBetweenNodes(n, targetNode) + timeBetweenNodes(currentNode, n);
-				if(pathCost < timeLeft){ //Adiciona nó à lista se ainda tem tempo para regressar ao hotel
+				if(pathCost < timeLeft){ 
 					toReturn.add(n);
 				} 
 			}
@@ -182,9 +145,6 @@ public class AStar {
 	public float distanceBetweenNodes(Node currentNode, Node targetNode){
 		float toReturn = (float) Math.sqrt((targetNode.getX()-currentNode.getX())*(targetNode.getX()-currentNode.getX())+
 				(targetNode.getY()-currentNode.getY())*(targetNode.getY()-currentNode.getY()));
-//		System.out.print("dist" + currentNode.getName());
-//		System.out.print("-" + targetNode.getName());
-//		System.out.println(toReturn);
 		return toReturn;
 		
 	}
@@ -192,9 +152,6 @@ public class AStar {
 	public float timeBetweenNodes(Node currentNode, Node targetNode){
 		float toReturn = (float) Math.sqrt((targetNode.getX()-currentNode.getX())*(targetNode.getX()-currentNode.getX())+
 				(targetNode.getY()-currentNode.getY())*(targetNode.getY()-currentNode.getY()));
-//		System.out.print("time" + currentNode.getName());
-//		System.out.print("-" + targetNode.getName());
-//		System.out.println((toReturn/2)/60.0);
 		return (float) ((toReturn/2)/60.0);
 	}
 

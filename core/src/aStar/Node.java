@@ -159,7 +159,7 @@ public class Node implements Comparable<Node> {
 	public float timeBetweenNodes(Node currentNode, Node targetNode){
 		float toReturn = (float) Math.sqrt((targetNode.getX()-currentNode.getX())*(targetNode.getX()-currentNode.getX())+
 				(targetNode.getY()-currentNode.getY())*(targetNode.getY()-currentNode.getY()));
-		return (float) ((toReturn/1.4)/60.0);
+		return (float) ((toReturn/2)/60.0);
 	}
 	
 	

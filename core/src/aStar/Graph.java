@@ -9,8 +9,6 @@ import java.util.regex.Pattern;
 
 import aStar.Node;
 
-/*Classe responsável por fazer a leitura do ficheiro com os dados
-  relativos aos interesses do turista, tempos de visita etc*/
 public class Graph {
 
 	protected ArrayList<Node> nodes = new ArrayList<Node>();
@@ -23,14 +21,10 @@ public class Graph {
 				if(parameter.length == 3){
 					Node n = new Node(parameter[0].trim(),Integer.parseInt(parameter[1].trim()),Integer.parseInt(parameter[2].trim()));
 					this.nodes.add(n);
-				//	System.out.print(parameter[0].trim());
-				//	System.out.print(Integer.parseInt(parameter[1].trim()));
-				//	System.out.println(Integer.parseInt(parameter[2].trim()));
 				} else {
 					System.err.println("Error parsing line : " + line);
 				}
 			}
-			//System.out.println("Node Size : " + this.nodes.size());
 		}
 	}
 	

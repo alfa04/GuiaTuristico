@@ -18,12 +18,9 @@ public class Star {
 	static int nDays = 1;
 	
 	
-	public Star () throws FileNotFoundException, IOException {
+	public Star() throws FileNotFoundException, IOException {
 		File file = new File("mapCity/city1.txt");
 		Scanner scan = new Scanner(System.in);
-		//System.out.println("Quantos dias vai viajar?\n");
-		//nDays = scan.nextInt();
-		//scan.close();
 		
 		graph = new Graph(file);
 		city = new CityBuild();
