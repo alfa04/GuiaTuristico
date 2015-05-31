@@ -1,0 +1,9 @@
+Castelo ; 0 ; 0
+Pelourinho ; 60 ; 2
+Museu ; 60 ; 5
+Mar ; 60 ; 3
+Jardim ; 60 ; 5
+Palacio ; 60 ; 1
+Teatro ; 60 ; 1
+Cinema ; 60 ; 5
+Estatua ; 60 ; 4
