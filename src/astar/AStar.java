@@ -186,8 +186,8 @@ public class AStar {
 				(targetNode.getY()-currentNode.getY())*(targetNode.getY()-currentNode.getY()));
 		System.out.print("time" + currentNode.getName());
 		System.out.print("-" + targetNode.getName());
-		System.out.println((toReturn/2)/*/60.0*/);
-		return (float) ((toReturn/2)/*/60.0*/);
+		System.out.println((toReturn/2)/60.0);
+		return (float) ((toReturn/2)/60.0);
 	}
 	
 }
